@@ -10,155 +10,195 @@
     - primary meta tags
   -->
   <title>Meet Patel</title>
-  <meta name="title" content="Richard Ryan">
-  <meta name="description" content="This is a photographer portfolio html template, made by codewithsadee.">
+  <meta name="title" content="Meet Patel">
+  <meta name="description" content="This is a Developer portfolio of Meet Patel.">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
   <style>
-    /* Portfolio Section */
-    /* .portfolio-list {
-      background: #000;
-      padding: 4rem 0;
-    } */
-
-    /* .wrapper {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    } */
-
-    /* .h2-meet {
-      font-size: 3.5rem;
-      color: #fff;
-      margin-bottom: 3rem;
-      position: relative;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
+    :root {
+      --neon-blue: #00f3ff;
+      --neon-pink: #ff00ff;
+      --dark-bg: #0a0a0f;
     }
 
-    .h2-meet.revealed {
-      opacity: 1;
-      transform: translateY(0);
-    } */
+    .portfolio-section {
+      padding: 4rem 0;
+      /* background: var(--dark-bg); */
+      position: relative;
+      overflow: hidden;
+    }
 
-    .project-grid-meet {
+    .project-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
+      gap: 2.5rem;
+      /* max-width: 1200px; */
+      width: 100%;
+      margin: 20px auto; /* Added back the margin */
+      padding: 0 2rem;
     }
 
-    .project-item-meet {
+    .project-card {
       position: relative;
-      border-radius: 15px;
+      border-radius: 20px;
       overflow: hidden;
-      transition: transform 0.3s ease;
+      transform-style: preserve-3d;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .project-image-meet {
-      width: 100%;
-      height: 400px;
-      object-fit: fill;
-      display: block;
-    }
-
-    .project-overlay-meet {
+    .project-card::before {
+      content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
+      inset: 0;
+      background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s;
+      mix-blend-mode: screen;
     }
 
-    .project-content-meet {
+    .project-card:hover {
+      transform: translateY(-10px) scale(1.02);
+    }
+
+    .project-card:hover::before {
+      opacity: 0.2;
+    }
+
+    .card-image {
+      width: 100%;
+      height: 500px;
+      object-fit: contain;
+      transition: transform 0.4s;
+    }
+
+    .card-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
       position: absolute;
-      bottom: -50px;
+      bottom: 0;
       left: 0;
+      right: 0;
       padding: 2rem;
-      color: #fff;
-      transition: all 0.3s ease;
-      opacity: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+      transform: translateY(100%);
+      transition: transform 0.4s;
     }
 
-    .project-title-meet {
-      font-size: 2.0rem;
+    .project-card:hover .card-content {
+      transform: translateY(0);
+    }
+
+    .card-title {
+      font-size: 2rem;
+      color: white;
       margin-bottom: 1rem;
+      /* background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink)); */
+      background: linear-gradient(45deg, #02bec8, var(--neon-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .project-links-meet {
+    .card-links {
       display: flex;
       gap: 1rem;
     }
 
-    .project-link-meet {
-      color: #fff;
+    .card-link {
+      padding: 0.8rem 1.5rem;
+      border: 2px solid var(--neon-blue);
+      border-radius: 30px;
+      color: var(--neon-blue);
       text-decoration: none;
-      padding: 0.5rem 1.5rem;
-      border: 2px solid #fff;
-      border-radius: 25px;
-      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      transition: 0.3s;
     }
 
-    .project-link-meet:hover {
-      background: #fff;
-      color: #000;
-    }
-
-    /* Hover Effects */
-    .project-item-meet:hover .project-overlay-meet {
-      opacity: 1;
-    }
-
-    .project-item-meet:hover .project-content-meet {
-      bottom: 0;
-      opacity: 1;
+    .card-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
       width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.3), transparent);
+      transition: 0.4s;
+    }
+
+    .card-link:hover {
+      background: var(--neon-blue);
+      color: black;
+      box-shadow: 0 0 20px var(--neon-blue);
+    }
+
+    .card-link:hover::before {
+      left: 100%;
     }
 
     /* Mobile Carousel */
     @media (max-width: 768px) {
-      .project-grid-meet {
+      .project-grid {
         display: flex;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        gap: 1rem;
-        padding-bottom: 1rem;
+        padding: 0 1rem 2rem;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
       }
 
-      .project-item-meet {
-        min-width: 100%;
-        scroll-snap-align: start;
-        margin-right: 1rem;
+      .project-grid::-webkit-scrollbar {
+        display: none;
       }
 
-      .project-title-meet {
-        /* color: black; */
-        font-weight: 600;
-        font-size: 20px;
+      .project-card {
+        min-width: 85vw;
+        scroll-snap-align: center;
+        margin: 0 1rem;
+        transform: scale(0.95);
+        transition: transform 0.3s;
       }
 
-      .project-overlay-meet {
-        /* opacity: 1; */
+      .project-card.active {
+        transform: scale(1);
       }
 
-      .project-content-meet {
-        bottom: 0;
-        opacity: 1;
-        background: #00000096;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
+      .card-content {
+        transform: translateY(0);
+        background: rgba(0, 0, 0, 0.8);
+      }
+
+      .auto-scroll-progress {
+        position: relative;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.1);
+        margin: 1rem auto;
+        width: 200px;
+        border-radius: 2px;
+      }
+
+      .progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+        width: 0;
+        transition: width 0.1s linear;
+        border-radius: 2px;
+      }
+    }
+
+    /* Hover 3D Effect */
+    @media (hover: hover) and (pointer: fine) {
+      .project-card:hover {
+        transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateZ(20px);
       }
     }
   </style>
@@ -326,224 +366,6 @@
 
 
 
-
-
-      <!-- 
-        - #GALLERY
-      -->
-
-      <!-- <section class="section gallery" id="gallery">
-        <div class="container">
-
-          <ul class="gallery-list">
-
-            <li class="gallery-item" data-reveal>
-
-              <div class="gallery-card">
-
-                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625;">
-                  <img src="./assets/images/gallery-1.jpg" width="450" height="625" loading="lazy" alt="The Drunken"
-                    class="img-cover">
-                </figure>
-
-                <div class="card-content">
-                  <h3 class="h6">
-                    <a href="#" class="card-title">The Drunken</a>
-                  </h3>
-
-                  <span class="card-tag">Food, Event</span>
-                </div>
-
-                <a href="#" class="btn-icon">
-                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
-                    alt="arrow-forward icon">
-                </a>
-
-              </div>
-
-              <div class="gallery-card">
-
-                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625;">
-                  <img src="./assets/images/gallery-2.jpg" width="450" height="625" loading="lazy"
-                    alt="Lettuce Entertain" class="img-cover">
-                </figure>
-
-                <div class="card-content">
-                  <h3 class="h6">
-                    <a href="#" class="card-title">Lettuce Entertain</a>
-                  </h3>
-
-                  <span class="card-tag">Landscape</span>
-                </div>
-
-                <a href="#" class="btn-icon">
-                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
-                    alt="arrow-forward icon">
-                </a>
-
-              </div>
-
-            </li>
-
-            <li class="gallery-item" data-reveal>
-
-              <div class="gallery-card">
-
-                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625;">
-                  <img src="./assets/images/gallery-3.jpg" width="450" height="625" loading="lazy" alt="Leaping Lizard"
-                    class="img-cover">
-                </figure>
-
-                <div class="card-content">
-                  <h3 class="h6">
-                    <a href="#" class="card-title">Leaping Lizard</a>
-                  </h3>
-
-                  <span class="card-tag">Model, Fashion</span>
-                </div>
-
-                <a href="#" class="btn-icon">
-                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
-                    alt="arrow-forward icon">
-                </a>
-
-              </div>
-
-              <div class="gallery-card">
-
-                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625;">
-                  <img src="./assets/images/gallery-4.jpg" width="450" height="625" loading="lazy" alt="Juan More Taco"
-                    class="img-cover">
-                </figure>
-
-                <div class="card-content">
-                  <h3 class="h6">
-                    <a href="#" class="card-title">Juan More Taco</a>
-                  </h3>
-
-                  <span class="card-tag">Architecture, Event</span>
-                </div>
-
-                <a href="#" class="btn-icon">
-                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
-                    alt="arrow-forward icon">
-                </a>
-
-              </div>
-
-            </li>
-
-            <li class="gallery-item" data-reveal>
-
-              <div class="gallery-card">
-
-                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625;">
-                  <img src="./assets/images/gallery-5.jpg" width="450" height="625" loading="lazy" alt="Goldilox Bagels"
-                    class="img-cover">
-                </figure>
-
-                <div class="card-content">
-                  <h3 class="h6">
-                    <a href="#" class="card-title">Goldilox Bagels</a>
-                  </h3>
-
-                  <span class="card-tag">People, Film</span>
-                </div>
-
-                <a href="#" class="btn-icon">
-                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
-                    alt="arrow-forward icon">
-                </a>
-
-              </div>
-
-              <div class="gallery-card">
-
-                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625;">
-                  <img src="./assets/images/gallery-6.jpg" width="450" height="625" loading="lazy" alt="Cookie Monstah"
-                    class="img-cover">
-                </figure>
-
-                <div class="card-content">
-                  <h3 class="h6">
-                    <a href="#" class="card-title">Cookie Monstah</a>
-                  </h3>
-
-                  <span class="card-tag">Wedding, Event</span>
-                </div>
-
-                <a href="#" class="btn-icon">
-                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
-                    alt="arrow-forward icon">
-                </a>
-
-              </div>
-
-            </li>
-
-            <li class="gallery-item" data-reveal>
-
-              <div class="gallery-card">
-
-                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625;">
-                  <img src="./assets/images/gallery-7.jpg" width="450" height="625" loading="lazy"
-                    alt="Divine Pastabilities" class="img-cover">
-                </figure>
-
-                <div class="card-content">
-                  <h3 class="h6">
-                    <a href="#" class="card-title">Divine Pastabilities</a>
-                  </h3>
-
-                  <span class="card-tag">Wedding, Model</span>
-                </div>
-
-                <a href="#" class="btn-icon">
-                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
-                    alt="arrow-forward icon">
-                </a>
-
-              </div>
-
-              <div class="gallery-card">
-
-                <figure class="card-banner img-holder has-before" style="--width: 450; --height: 625;">
-                  <img src="./assets/images/gallery-8.jpg" width="450" height="625" loading="lazy"
-                    alt="The Lockhart Bar" class="img-cover">
-                </figure>
-
-                <div class="card-content">
-                  <h3 class="h6">
-                    <a href="#" class="card-title">The Lockhart Bar</a>
-                  </h3>
-
-                  <span class="card-tag">Health & Wellnes</span>
-                </div>
-
-                <a href="#" class="btn-icon">
-                  <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy"
-                    alt="arrow-forward icon">
-                </a>
-
-              </div>
-
-            </li>
-
-          </ul>
-
-          <a href="#service" class="scroll-down">
-            <img src="./assets/images/scroll-down.svg" width="40" height="66" loading="lazy" alt="mouse scroll">
-          </a>
-
-          <img src="./assets/images/gallery-shape.svg" width="220" height="78" loading="lazy" alt="" class="shape">
-
-        </div>
-      </section> -->
-
-
-
-
-
       <!-- 
         - #CATEGORY
       -->
@@ -559,10 +381,6 @@
               <a href="#" class="category-card">
                 <h3 class="h4 card-title">Full Stack Development,</h3>
 
-                <!-- <figure class="card-banner img-holder" style="--width: 600; --height: 690;">
-                  <img src="./assets/images/category-1.jpg" width="600" height="690" loading="lazy" alt="Web Development"
-                    class="img-cover">
-                </figure> -->
 
               </a>
             </li>
@@ -570,144 +388,48 @@
             <li class="category-item" data-reveal>
               <a href="#" class="category-card">
                 <h3 class="h4 card-title">Mobile Apps,</h3>
-                <!--
-                <figure class="card-banner img-holder" style="--width: 600; --height: 690;">
-                  <img src="./assets/images/category-2.jpg" width="600" height="690" loading="lazy" alt="Mobile Apps"
-                    class="img-cover">
-                </figure>
-                -->
               </a>
             </li>
 
             <li class="category-item" data-reveal>
               <a href="#" class="category-card">
                 <h3 class="h4 card-title">Frontend,</h3>
-                <!--
-                <figure class="card-banner img-holder" style="--width: 600; --height: 690;">
-                  <img src="./assets/images/category-3.jpg" width="600" height="690" loading="lazy" alt="Frontend"
-                    class="img-cover">
-                </figure>
-                -->
               </a>
             </li>
 
             <li class="category-item" data-reveal>
               <a href="#" class="category-card">
                 <h3 class="h4 card-title">Backend,</h3>
-                <!--
-                <figure class="card-banner img-holder" style="--width: 600; --height: 690;">
-                  <img src="./assets/images/category-4.jpg" width="600" height="690" loading="lazy" alt="Backend"
-                    class="img-cover">
-                </figure>
-                -->
               </a>
             </li>
-
-            <!-- <li class="category-item" data-reveal>
-              <a href="#" class="category-card">
-                <h3 class="h4 card-title">Full Stack,</h3>
-                
-                <figure class="card-banner img-holder" style="--width: 600; --height: 690;">
-                  <img src="./assets/images/category-2.jpg" width="600" height="690" loading="lazy" alt="Full Stack"
-                    class="img-cover">
-                </figure>
-               
-              </a>
-            </li> -->
-
-            <!-- <li class="category-item" data-reveal>
-              <a href="#" class="category-card">
-                <h3 class="h4 card-title">UI/UX,</h3>
-                
-                <figure class="card-banner img-holder" style="--width: 600; --height: 690;">
-                  <img src="./assets/images/category-5.jpg" width="600" height="690" loading="lazy" alt="UI/UX"
-                    class="img-cover">
-                </figure>
-               
-              </a>
-            </li> -->
-
-            <!-- <li class="category-item" data-reveal>
-              <a href="#" class="category-card">
-                <h3 class="h4 card-title">DevOps,</h3>
-                
-                <figure class="card-banner img-holder" style="--width: 600; --height: 690;">
-                  <img src="./assets/images/category-6.jpg" width="600" height="690" loading="lazy" alt="DevOps"
-                    class="img-cover">
-                </figure>
-               
-              </a>
-            </li> -->
-
-            <!-- <li class="category-item" data-reveal>
-              <a href="#" class="category-card">
-                <h3 class="h4 card-title">Cloud Computing,</h3>
-                
-                <figure class="card-banner img-holder" style="--width: 600; --height: 690;">
-                  <img src="./assets/images/category-7.jpg" width="600" height="690" loading="lazy" alt="Cloud Computing"
-                    class="img-cover">
-                </figure>
-               
-              </a>
-            </li> -->
 
             <li class="category-item" data-reveal>
               <a href="#" class="category-card">
                 <h3 class="h4 card-title">Database,</h3>
-                <!--
-                <figure class="card-banner img-holder" style="--width: 600; --height: 690;">
-                  <img src="./assets/images/category-8.jpg" width="600" height="690" loading="lazy" alt="Database"
-                    class="img-cover">
-                </figure>
-                -->
               </a>
             </li>
 
             <li class="category-item" data-reveal>
               <a href="#" class="category-card">
                 <h3 class="h4 card-title">APIs,</h3>
-                <!--
-                <figure class="card-banner img-holder" style="--width: 600; --height: 690;">
-                  <img src="./assets/images/category-9.jpg" width="600" height="690" loading="lazy" alt="APIs"
-                    class="img-cover">
-                </figure>
-                -->
               </a>
             </li>
 
             <li class="category-item" data-reveal>
               <a href="#" class="category-card">
                 <h3 class="h4 card-title">E-Commerce,</h3>
-                <!--
-                <figure class="card-banner img-holder" style="--width: 600; --height: 690;">
-                  <img src="./assets/images/category-7.jpg" width="600" height="690" loading="lazy" alt="E-Commerce"
-                    class="img-cover">
-                </figure>
-                -->
               </a>
             </li>
 
             <li class="category-item" data-reveal>
               <a href="#" class="category-card">
                 <h3 class="h4 card-title">CMS,</h3>
-                <!--
-                <figure class="card-banner img-holder" style="--width: 600; --height: 690;">
-                  <img src="./assets/images/category-10.jpg" width="600" height="690" loading="lazy" alt="CMS"
-                    class="img-cover">
-                </figure>
-                -->
               </a>
             </li>
 
             <li class="category-item" data-reveal>
               <a href="#" class="category-card">
                 <h3 class="h4 card-title">Security.</h3>
-                <!--
-                <figure class="card-banner img-holder" style="--width: 600; --height: 690;">
-                  <img src="./assets/images/category-11.jpg" width="600" height="690" loading="lazy"
-                    alt="Security" class="img-cover">
-                </figure>
-                -->
               </a>
             </li>
 
@@ -754,7 +476,7 @@
           <figure class="about-banner" data-reveal="left">
 
             <div class="has-before" style="--width: 512; --height: 684;">
-              <img src="Meetbg-Final.png" width="512" height="684" loading="lazy" alt="Riachard Ryan" class="img-cover"
+              <img src="Meetbg-Final.png" width="512" height="684" loading="lazy" alt="Meet Patel " class="img-cover"
                 style="height: auto;">
             </div>
 
@@ -824,13 +546,6 @@
                 </p>
               </div>
 
-              <!-- <a href="#" class="btn-icon" aria-label="See more">
-                <svg xmlns="http://www.w3.org/2000/svg" width="43" height="20" viewBox="0 0 43 20" fill="none">
-                  <path d="M0 10H41" stroke="white" stroke-width="2" />
-                  <path d="M33 1L41.9 10.2727L33 19" stroke="white" stroke-width="2" />
-                </svg>
-              </a> -->
-
             </div>
           </li>
 
@@ -847,13 +562,6 @@
                   MERN Stack(MongoDB, Express.js, React.js, Node.js)
                 </p>
               </div>
-
-              <!-- <a href="#" class="btn-icon" aria-label="See more">
-                <svg xmlns="http://www.w3.org/2000/svg" width="43" height="20" viewBox="0 0 43 20" fill="none">
-                  <path d="M0 10H41" stroke="white" stroke-width="2" />
-                  <path d="M33 1L41.9 10.2727L33 19" stroke="white" stroke-width="2" />
-                </svg>
-              </a> -->
 
             </div>
           </li>
@@ -896,12 +604,6 @@
                 </p>
               </div>
 
-              <!-- <a href="#" class="btn-icon" aria-label="See more">
-                <svg xmlns="http://www.w3.org/2000/svg" width="43" height="20" viewBox="0 0 43 20" fill="none">
-                  <path d="M0 10H41" stroke="white" stroke-width="2" />
-                  <path d="M33 1L41.9 10.2727L33 19" stroke="white" stroke-width="2" />
-                </svg>
-              </a> -->
 
             </div>
           </li>
@@ -927,83 +629,73 @@
 
               <h2 class="h2 section-title" id="portfolio-label" data-reveal>My Recent Work.</h2>
 
-              <div class="project-grid-meet">
-                <!-- Project Items -->
-
-                <div class="project-item-meet">
-                  <img src="assets/images/Chocolatee.png" alt="Project" class="project-image-meet">
-                  <div class="project-overlay-meet"></div>
-                  <div class="project-content-meet">
-                    <h3 class="project-title-meet">Chocolate Inventory Basic CRUD <br> DOT NET-8 MVC, Entity Framework</h3>
-                    <div class="project-links-meet">
-                      <!-- <a href="#" class="project-link-meet">Demo</a> -->
-                      <!-- <a href="#" class="project-link-meet">Code</a> -->
+              <section class="portfolio-section">
+                <div class="project-grid">
+                  <!-- Project Items -->
+                  <div class="project-card" data-aos="fade-up">
+                    <img src="assets/images/Chocolatee.png" class="card-image" alt="Project">
+                    <div class="card-content">
+                      <h3 class="card-title">Chocolate Inventory System</h3>
+                      <div class="card-links">
+                        <a href="#" class="card-link">Demo</a>
+                        <a href="#" class="card-link">Code</a>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="project-item-meet">
-                  <img src="assets/images/toys.png" alt="Project" class="project-image-meet">
-                  <div class="project-overlay-meet"></div>
-                  <div class="project-content-meet">
-                    <h3 class="project-title-meet">toys Store Basic CRUD <br> DOT NET-8 MVC, Entity Framework</h3>
-                    <div class="project-links-meet">
-                      <!-- <a href="#" class="project-link-meet">Demo</a> -->
-                      <!-- <a href="#" class="project-link-meet">Code</a> -->
+                  <div class="project-card" data-aos="fade-up">
+                    <img src="assets/images/toys.png" class="card-image" alt="Project">
+                    <div class="card-content">
+                      <h3 class="card-title">Chocolate  System</h3>
+                      <div class="card-links">
+                        <a href="#" class="card-link">Demo</a>
+                        <a href="#" class="card-link">Code</a>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="project-item-meet">
-                  <img src="assets/images/Fashion-Ecommerce.png" alt="Project" class="project-image-meet">
-                  <div class="project-overlay-meet"></div>
-                  <div class="project-content-meet">
-                    <h3 class="project-title-meet">Fashion Ecommerce Website using PHP</h3>
-                    <div class="project-links-meet">
-                      <!-- <a href="#" class="project-link-meet">Demo</a> -->
-                      <!-- <a href="#" class="project-link-meet">Code</a> -->
+                  <div class="project-card" data-aos="fade-up">
+                    <img src="assets/images/Fashion-Ecommerce.png" class="card-image" alt="Project">
+                    <div class="card-content">
+                      <h3 class="card-title">Chocolate Inventory </h3>
+                      <div class="card-links">
+                        <a href="#" class="card-link">Demo</a>
+                        <a href="#" class="card-link">Code</a>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="project-item-meet">
-                  <img src="assets/images/Weather.png" alt="Project" class="project-image-meet">
-                  <div class="project-overlay-meet"></div>
-                  <div class="project-content-meet">
-                    <h3 class="project-title-meet">ClimateSphere - Weather Forecasting Website Using Javascript & Weather API</h3>
-                    <div class="project-links-meet">
-                      <a href="https://climate-sphere.vercel.app/" target="_blank" class="project-link-meet">Demo</a>
-                      <!-- <a href="#" class="project-link-meet">Code</a> -->
+                  <div class="project-card" data-aos="fade-up">
+                    <img src="assets/images/Weather.png" class="card-image" alt="Project">
+                    <div class="card-content">
+                      <h3 class="card-title"> Inventory System</h3>
+                      <div class="card-links">
+                        <a href="#" class="card-link">Demo</a>
+                        <a href="#" class="card-link">Code</a>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="project-item-meet">
-                  <img src="assets/images/music.png" alt="Project" class="project-image-meet">
-                  <div class="project-overlay-meet"></div>
-                  <div class="project-content-meet">
-                    <h3 class="project-title-meet">Music Steaming Platfrom using PHP</h3>
-
-                    <div class="project-links-meet">
-                      <!-- <a href="#" class="project-link-meet">Demo</a> -->
-                      <!-- <a href="#" class="project-link-meet">Code</a> -->
+                  <div class="project-card" data-aos="fade-up">
+                    <img src="assets/images/music.png" class="card-image" alt="Project">
+                    <div class="card-content">
+                      <h3 class="card-title">Chocolate  System</h3>
+                      <div class="card-links">
+                        <a href="#" class="card-link">Demo</a>
+                        <a href="#" class="card-link">Code</a>
+                      </div>
                     </div>
                   </div>
+
+                  
+
+                  <!-- Repeat other project cards similarly -->
+
                 </div>
-
-                <!-- <div class="project-item-meet">
-                  <img src="assets/images/Fashion-Ecommerce.png" alt="Project" class="project-image-meet">
-                  <div class="project-overlay-meet"></div>
-                  <div class="project-content-meet">
-                    <h3 class="project-title-meet">AI Agent - Python, NLP, LLM and ML</h3>
-                    <div class="project-links-meet">
-                      <a href="#" class="project-link-meet">Demo</a>
-                      <a href="#" class="project-link-meet">Code</a>
-                    </div>
-                  </div>  
-                </div> -->
-
-              </div>
+                <div class="auto-scroll-progress">
+                  <div class="progress-bar"></div>
+                </div>
+              </section>
 
 
             </div>
@@ -1043,17 +735,6 @@
           <img src="./assets/images/arrow-forward.svg" width="43" height="20" loading="lazy" alt="arrow-forward icon">
         </a>
 
-        <!-- <img src="./assets/images/footer-1.jpg" width="159" height="176" loading="lazy" alt="photography"
-          class="abs-img abs-img-1" data-reveal>
-
-        <img src="./assets/images/footer-2.jpg" width="265" height="275" loading="lazy" alt="photography"
-          class="abs-img abs-img-2" data-reveal>
-
-        <img src="./assets/images/footer-3.jpg" width="303" height="272" loading="lazy" alt="photography"
-          class="abs-img abs-img-3" data-reveal>
-
-        <img src="./assets/images/footer-4.jpg" width="175" height="175" loading="lazy" alt="photography"
-          class="abs-img abs-img-4" data-reveal> -->
 
         <img src="./assets/images/footer-shape.svg" width="185" height="134" loading="lazy" alt="" class="shape">
 
@@ -1125,62 +806,85 @@
   -->
 
   <script>
-    // Reveal Animation
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('[data-reveal]').forEach((el) => {
-      observer.observe(el);
+    AOS.init({
+      duration: 1000,
+      once: true
     });
 
-    // Mobile Carousel Auto-Scroll
-    let isMobile = window.matchMedia("(max-width: 768px)").matches;
-    let scrollInterval;
+    // Mobile Carousel Logic
+    const grid = document.querySelector('.project-grid');
+    const progressBar = document.querySelector('.progress-bar');
+    let isScrolling = false;
+    let autoScrollInterval;
+    let scrollWidth = grid.scrollWidth - grid.clientWidth;
 
     function startAutoScroll() {
-      if (isMobile) {
-        const container = document.querySelector('.project-grid-meet');
-        let scrollAmount = 0;
+      let scrollPos = 0;
+      const speed = 0.5; // Pixels per interval
 
-        scrollInterval = setInterval(() => {
-          container.scrollLeft += 2;
-          scrollAmount += 2;
-
-          if (scrollAmount >= container.scrollWidth - container.clientWidth) {
-            container.scrollLeft = 0;
-            scrollAmount = 0;
-          }
-        }, 50);
-      }
+      autoScrollInterval = setInterval(() => {
+        if (!isScrolling) {
+          scrollPos += speed;
+          if (scrollPos >= scrollWidth) scrollPos = 0;
+          grid.scrollLeft = scrollPos;
+          progressBar.style.width = (scrollPos / scrollWidth) * 100 + '%';
+        }
+      }, 10);
     }
 
     // Pause on interaction
-    const carousel = document.querySelector('.project-grid-meet');
-    let isTouching = false;
-
-    carousel.addEventListener('touchstart', () => {
-      clearInterval(scrollInterval);
-      isTouching = true;
+    grid.addEventListener('touchstart', () => {
+      isScrolling = true;
+      clearInterval(autoScrollInterval);
     });
 
-    carousel.addEventListener('touchend', () => {
-      isTouching = false;
+    grid.addEventListener('touchend', () => {
+      isScrolling = false;
       setTimeout(startAutoScroll, 5000);
     });
 
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      isMobile = window.matchMedia("(max-width: 768px)").matches;
-      if (!isMobile) clearInterval(scrollInterval);
-      else startAutoScroll();
+    // 3D Hover Effect
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        if (window.matchMedia("(min-width: 769px)").matches) {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          // const rotateY = (x - rect.width / 2) / 20;
+          // const rotateX = (y - rect.height / 2) / -20;
+
+          gsap.to(card, {
+            duration: 0.5,
+            rotateX: rotateX,
+            rotateY: rotateY,
+            ease: "power2.out"
+          });
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          duration: 0.5,
+          rotateX: 0,
+          rotateY: 0,
+          ease: "power2.out"
+        });
+      });
     });
 
-    startAutoScroll();
+    // Initialize auto-scroll on mobile
+    if (window.matchMedia("(max-width: 768px)").matches) {
+      startAutoScroll();
+    }
+
+    window.addEventListener('resize', () => {
+      scrollWidth = grid.scrollWidth - grid.clientWidth;
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        startAutoScroll();
+      } else {
+        clearInterval(autoScrollInterval);
+      }
+    });
   </script>
 
 
